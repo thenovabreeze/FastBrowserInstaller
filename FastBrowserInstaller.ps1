@@ -1,19 +1,15 @@
-﻿# Requires Administrator privileges
 If (-NOT ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
     Write-Host "Restarting script with administrator privileges..."
     Start-Process powershell.exe "-NoProfile -ExecutionPolicy RemoteSigned -File `"$PSCommandPath`"" -Verb RunAs
     Exit
 }
 
-# --- Configuration ---
 
-# Define installation methods (Direct Download option removed)
 $InstallMethods = @(
     @{ Name = "Winget"; Value = "Winget" },
     @{ Name = "Chocolatey"; Value = "Chocolatey" }
 )
 
-# Browser configurations including Winget and Chocolatey IDs only
 $Browsers = @(
     [PSCustomObject]@{
         Name          = "Microsoft Edge Stable"
@@ -72,7 +68,6 @@ $Browsers = @(
     }
 )
 
-# --- Method Selection ---
 
 Write-Host "Select an installation method:"
 for ($i = 0; $i -lt $InstallMethods.Count; $i++) {
@@ -90,7 +85,6 @@ if ($MethodChoice -ge 1 -and $MethodChoice -le $InstallMethods.Count) {
     Exit
 }
 
-# --- Browser Selection ---
 
 Write-Host "Opening browser selection dialog..."
 $SelectedBrowsers = $Browsers | Out-GridView -Title "Select Browsers to Install (Ctrl+Click for multiple)" -PassThru
@@ -100,9 +94,7 @@ if (-not $SelectedBrowsers) {
     Exit
 }
 
-# --- Installation ---
 
-# Check for package managers if selected
 if ($SelectedMethod -eq "Winget") {
     if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
         Write-Error "Winget is not found. Please install it or select another method."
@@ -123,7 +115,6 @@ if ($SelectedMethod -eq "Winget") {
     }
 }
 
-# Install selected browsers
 foreach ($browser in $SelectedBrowsers) {
     Write-Host "`nAttempting to install $($browser.Name) using $($SelectedMethod)..."
 
