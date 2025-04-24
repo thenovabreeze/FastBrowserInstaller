@@ -1,5 +1,5 @@
 # FastBrowserInstaller
-Fast Browser Installer via winget or chocolatey
+Fast Browser Installer via winget or chocolatey    
 [!NOTE]
 You can always check if it has anything bad since this project is open-source
 ## How to use (Local and Online)
