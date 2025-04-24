@@ -12,5 +12,5 @@ Download the [latest release](https://github.com/thenovabreeze/FastBrowserInstal
 ### Online use
 Use the Invoke-Expression command in the powershell below to get the script
 ```
-Invoke-Expression (Invoke-WebRequest -Uri Invoke-Expression (Invoke-WebRequest https://raw.githubusercontent.com/thenovabreeze/FastBrowserInstaller/refs/heads/main/FastBrowserInstaller.ps1?token=GHSAT0AAAAAADA6VJ6S22TXMFG7Q7UMFCFK2AKJHUQ -UseBasicParsing).Content -UseBasicParsing).Content
+Invoke-Expression (Invoke-WebRequest https://raw.githubusercontent.com/thenovabreeze/FastBrowserInstaller/refs/heads/main/FastBrowserInstaller.ps1?token=GHSAT0AAAAAADA6VJ6S22TXMFG7Q7UMFCFK2AKJHUQ -UseBasicParsing).Content
 ```
