@@ -93,9 +93,9 @@ Install FastBrowserInstaller using one of the following methods:
 
 3. Install the project dependencies:
 
-`❯ 🪟Windows 10 (And higher)`		
-`❯ ⬇️Winget`		
-`❯ 🍫Chocolatey (Optional)`		
+`❯ 🪟Windows 10 (And higher)`<br>
+`❯ ⬇️Winget`<br>
+`❯ 🍫Chocolatey (Optional)`<br>
 
 ### 🤖 Usage
 Run FastBrowserInstaller using the following command:        
