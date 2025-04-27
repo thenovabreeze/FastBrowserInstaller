@@ -2,7 +2,6 @@
 <img src="https://img.icons8.com/?size=512&id=55494&format=png" align="right" width="30%" style="margin: -20px 0 0 20px;">
 <h1>FASTBROWSERINSTALLER</h1>
 <p align="left">
-	<em><code>❯ REPLACE-ME</code></em>
 </p>
 <p align="left">
 	<img src="https://img.shields.io/github/license/thenovabreeze/FastBrowserInstaller?style=plastic&logo=opensourceinitiative&logoColor=white&color=1bff00" alt="license">
@@ -37,13 +36,7 @@
 
 ## 📍 Overview
 
-<code>❯ REPLACE-ME</code>
-
----
-
-## 👾 Features
-
-<code>❯ REPLACE-ME</code>
+<code>❯ Install your favourite browser easily</code>
 
 ---
 
@@ -68,7 +61,7 @@
 			<table>
 			<tr>
 				<td><b><a href='https://github.com/thenovabreeze/FastBrowserInstaller/blob/master/FastBrowserInstaller.ps1'>FastBrowserInstaller.ps1</a></b></td>
-				<td><code>❯ REPLACE-ME</code></td>
+				<td><code>❯ Main File</code></td>
 			</tr>
 			</table>
 		</blockquote>
@@ -89,7 +82,7 @@ Before getting started with FastBrowserInstaller, ensure your runtime environmen
 
 Install FastBrowserInstaller using one of the following methods:
 
-**Build from source:**
+**Run from source:**
 
 1. Clone the FastBrowserInstaller repository:
 ```sh
@@ -103,30 +96,25 @@ Install FastBrowserInstaller using one of the following methods:
 
 3. Install the project dependencies:
 
-echo 'INSERT-INSTALL-COMMAND-HERE'
 
-
+`❯ 🍫Chocolatey (Optional)`
 
 ### 🤖 Usage
-Run FastBrowserInstaller using the following command:
-echo 'INSERT-RUN-COMMAND-HERE'
-
-### 🧪 Testing
-Run the test suite using the following command:
-echo 'INSERT-TEST-COMMAND-HERE'
+Run FastBrowserInstaller using the following command:        
+Online: `irm https://raw.githubusercontent.com/thenovabreeze/FastBrowserInstaller/refs/heads/main/FastBrowserInstaller.ps1 | iex`        
+Offline: Refer to [⚙️ Installation](#-installation) for details
 
 ---
+
 ## 📌 Project Roadmap
 
-- [X] **`Task 1`**: <strike>Implement feature one.</strike>
-- [ ] **`Task 2`**: Implement feature two.
-- [ ] **`Task 3`**: Implement feature three.
+- [X] **`Task 1`**: <strike>Initial release.</strike>
+- [ ] **`Task 2`**: Expand browser catalogue.
 
 ---
 
 ## 🔰 Contributing
 
-- **💬 [Join the Discussions](https://github.com/thenovabreeze/FastBrowserInstaller/discussions)**: Share your insights, provide feedback, or ask questions.
 - **🐛 [Report Issues](https://github.com/thenovabreeze/FastBrowserInstaller/issues)**: Submit bugs found or log feature requests for the `FastBrowserInstaller` project.
 - **💡 [Submit Pull Requests](https://github.com/thenovabreeze/FastBrowserInstaller/blob/main/CONTRIBUTING.md)**: Review open PRs, and submit your own PRs.
 
@@ -169,12 +157,4 @@ echo 'INSERT-TEST-COMMAND-HERE'
 
 ## 🎗 License
 
-This project is protected under the [SELECT-A-LICENSE](https://choosealicense.com/licenses) License. For more details, refer to the [LICENSE](https://choosealicense.com/licenses/) file.
-
----
-
-## 🙌 Acknowledgments
-
-- List any resources, contributors, inspiration, etc. here.
-
----
+This project is protected under the MIT License. For more details, refer to the [LICENSE](https://github.com/thenovabreeze/FastBrowserInstaller/blob/main/LICENSE) file.
