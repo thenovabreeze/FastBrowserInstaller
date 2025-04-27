@@ -19,13 +19,12 @@
 ## 🔗 Table of Contents
 
 - [📍 Overview](#-overview)
-- [👾 Features](#-features)
 - [📁 Project Structure](#-project-structure)
   - [📂 Project Index](#-project-index)
 - [🚀 Getting Started](#-getting-started)
-  - [☑️ Prerequisites](#☑️-prerequisites)
-  - [⚙️ Installation](#⚙️-installation)
-  - [🤖 Usage](#🤖-usage)
+  - [☑️ Prerequisites](#prerequisites)
+  - [⚙️ Installation](#installation)
+  - [🤖 Usage](#usage)
 - [📌 Project Roadmap](#-project-roadmap)
 - [🔰 Contributing](#-contributing)
 - [🎗 License](#-license)
