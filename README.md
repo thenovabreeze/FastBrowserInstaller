@@ -93,13 +93,14 @@ Install FastBrowserInstaller using one of the following methods:
 
 3. Install the project dependencies:
 
-
+`❯ 🪟Windows 10 (And higher)`
+`❯ ⬇️Winget`
 `❯ 🍫Chocolatey (Optional)`
 
 ### 🤖 Usage
 Run FastBrowserInstaller using the following command:        
 Online: `irm https://raw.githubusercontent.com/thenovabreeze/FastBrowserInstaller/refs/heads/main/FastBrowserInstaller.ps1 | iex`        
-Offline: Refer to [⚙️ Installation](#-installation) for details
+Offline: Refer to [⚙️ Installation](#%EF%B8%8F-installation) for details
 
 ---
 
