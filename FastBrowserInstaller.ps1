@@ -1,9 +1,7 @@
-If (-NOT ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
-    Write-Host "Restarting script with administrator privileges..."
-    Start-Process powershell.exe "-NoProfile -ExecutionPolicy RemoteSigned -File `"$PSCommandPath`"" -Verb RunAs
-    Exit
+﻿If (-NOT ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
+    Write-Error "This script requires administrator privileges to run. Please run it with Run as administrator."
+    Exit 1
 }
-
 
 $InstallMethods = @(
     @{ Name = "Winget"; Value = "Winget" },
@@ -65,9 +63,28 @@ $Browsers = @(
         Name          = "Opera Browser"
         WingetId      = "Opera.Opera"
         ChocolateyId  = "opera"
+    },
+    [PSCustomObject]@{
+        Name          = "Vivaldi Browser"
+        WingetId      = "Vivaldi.Vivaldi"
+        ChocolateyId  = "vivaldi"
+    },
+    [PSCustomObject]@{
+        Name          = "DuckDuckGo Desktop Browser"
+        WingetId      = "DuckDuckGo.DesktopBrowser"
+        ChocolateyId  = $null
+    },
+     [PSCustomObject]@{
+        Name          = "Opera GX Stable"
+        WingetId      = "Opera.OperaGX"
+        ChocolateyId  = "opera-gx"
+    },
+    [PSCustomObject]@{
+        Name          = "Arc"
+        WingetId      = "TheBrowserCompany.Arc"
+        ChocolateyId  = $null
     }
 )
-
 
 Write-Host "Select an installation method:"
 for ($i = 0; $i -lt $InstallMethods.Count; $i++) {
@@ -82,9 +99,8 @@ if ($MethodChoice -ge 1 -and $MethodChoice -le $InstallMethods.Count) {
     Write-Host "You selected: $($InstallMethods[$MethodChoice -1].Name)" -ForegroundColor Green
 } else {
     Write-Error "Invalid choice. Exiting."
-    Exit
+    Exit 1
 }
-
 
 Write-Host "Opening browser selection dialog..."
 $SelectedBrowsers = $Browsers | Out-GridView -Title "Select Browsers to Install (Ctrl+Click for multiple)" -PassThru
@@ -94,23 +110,21 @@ if (-not $SelectedBrowsers) {
     Exit
 }
 
-
 if ($SelectedMethod -eq "Winget") {
     if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
         Write-Error "Winget is not found. Please install it or select another method."
         Write-Host "You can usually install Winget from the Microsoft Store (App Installer)."
-        Exit
+        Exit 1
     }
 } elseif ($SelectedMethod -eq "Chocolatey") {
      if (-not (Get-Command choco -ErrorAction SilentlyContinue)) {
         Write-Warning "Chocolatey is not found. Attempting to install Chocolatey..."
-        # Install Chocolatey - Official command from chocolatey.org
         try {
             Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
             Write-Host "Chocolatey installed successfully." -ForegroundColor Green
         } catch {
             Write-Error "Failed to install Chocolatey. Please install it manually or select another method."
-            Exit
+            Exit 1
         }
     }
 }
@@ -126,9 +140,6 @@ foreach ($browser in $SelectedBrowsers) {
                      continue
                  }
                  Write-Host "Installing $($browser.Name) using Winget (ID: $($browser.WingetId))..."
-                 # Use -h for silent, --scope machine for system-wide install (requires admin)
-                 # --exact matches the ID exactly
-                 # --accept-package-agreements and --accept-source-agreements automate prompts
                  Start-Process winget -ArgumentList "install --id $($browser.WingetId) -h --scope machine --exact --accept-package-agreements --accept-source-agreements" -Wait -NoNewWindow -ErrorAction Stop
                  Write-Host "$($browser.Name) installed successfully (Winget)." -ForegroundColor Green
             }
@@ -137,8 +148,7 @@ foreach ($browser in $SelectedBrowsers) {
                      Write-Warning "Chocolatey ID not available for $($browser.Name). Skipping Chocolatey installation."
                      continue
                  }
-                 Write-Host "Installing $($browser.Name) using Chocolatey (ID: $($browser.ChocolateyId))..."
-                 # -y accepts prompts, --no-progress hides download progress which can be messy in scripts
+                 Write-Host "Installing $($browser.Name) using Chocolatey (ID: $($browser.ChocolateyId))...."
                  Start-Process choco -ArgumentList "install $($browser.ChocolateyId) -y --no-progress" -Wait -NoNewWindow -ErrorAction Stop
                  Write-Host "$($browser.Name) installed successfully (Chocolatey)." -ForegroundColor Green
             }
@@ -146,8 +156,6 @@ foreach ($browser in $SelectedBrowsers) {
     }
     catch {
         Write-Error "Failed to install $($browser.Name) using $($SelectedMethod): $_"
-        # Decide if you want to stop or continue with the next browser
-        # break # uncomment to stop on first error
     }
 }
 
@@ -155,8 +163,8 @@ Write-Host "`nInstallation process finished." -ForegroundColor Cyan
 # SIG # Begin signature block
 # MIIF6QYJKoZIhvcNAQcCoIIF2jCCBdYCAQExDzANBglghkgBZQMEAgEFADB5Bgor
 # BgEEAYI3AgEEoGswaTA0BgorBgEEAYI3AgEeMCYCAwEAAAQQH8w7YFlLCE63JNLG
-# KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCA4YB8tSvTUSpsK
-# ceDjJeYdtarVdvpRau4ISOMNADhSZ6CCA00wggNJMIICMaADAgECAhBktf5gt/YO
+# KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCBvy130umusRLI8
+# n0kW1lSY3afJLS22gB7KM/kGG1SbDKCCA00wggNJMIICMaADAgECAhBktf5gt/YO
 # lUkig1srIhj8MA0GCSqGSIb3DQEBCwUAMCwxCzAJBgNVBAYTAlVBMR0wGwYDVQQD
 # DBRGYXN0QnJvd3Nlckluc3RhbGxlcjAeFw0yNTA0MjQxMzQzNDRaFw0zMDA0MjQx
 # MzUzMzhaMCwxCzAJBgNVBAYTAlVBMR0wGwYDVQQDDBRGYXN0QnJvd3Nlckluc3Rh
@@ -178,11 +186,11 @@ Write-Host "`nInstallation process finished." -ForegroundColor Cyan
 # c3RCcm93c2VySW5zdGFsbGVyAhBktf5gt/YOlUkig1srIhj8MA0GCWCGSAFlAwQC
 # AQUAoIGEMBgGCisGAQQBgjcCAQwxCjAIoAKAAKECgAAwGQYJKoZIhvcNAQkDMQwG
 # CisGAQQBgjcCAQQwHAYKKwYBBAGCNwIBCzEOMAwGCisGAQQBgjcCARUwLwYJKoZI
-# hvcNAQkEMSIEIL+Sp+TSLAvPfXWXm+I3p2i/pv05FTUh2DZ3/ATU3mDsMA0GCSqG
-# SIb3DQEBAQUABIIBAI9+y6exQq4wOO3TtZRm0a1/SR+3AQLEDgMRIcihdCJ3N53X
-# uRlYe3RV8LdPB9uOkZHRc1IUvE9qYmacS38v3WfcGNpeFsYTvCiHRkxbwsxqSAHh
-# T4ImGynMqu0mJal/g+FNkL2AvD+zkZp3X5h7ZzaJMDCtfZdNN676PBYIqNHYV8SK
-# NSg4g5vZwsrkeyCXVLHM2c3bZlfb1Aj20w6UmKb/0u6+Zu7VCfcao2vsbtLdP1rr
-# sg3ix8guePQJC+fSB2RLqg+i/P2DcVEoplGyQtvbdXAJA5nZyRz5h6bLxeBYQ4bX
-# rl8O2Qbq4my2U02iTJhVPM+iO9EreZnbWANGtmw=
+# hvcNAQkEMSIEII6S2OfbXpGsXp/XOWX1Y2yaPjKH7+DFXnwcbZGyEe4QMA0GCSqG
+# SIb3DQEBAQUABIIBAJnO/tapq/O6qpPFYEgfTYcNdVArTrpQ2glbKXcVbSkol9sE
+# 2RaLwpdl2C6+/+lwNhbk14eQ1iuTonUQ9QM9CGLSzA2sclu+aVJi9tWc96yNN4bF
+# W3RnRonE7ig1YTuef2JDob733+5zfN46QZ49gToMX9/+A+hAeVA7OMp0x1nCVWCH
+# y5IIsPcDGMs9fe6hfyWu3RUqgLf4WxhW3h/9KDtFNpCK8i8uokvYtOwNXKoWnfcl
+# 4QealyqPrSmZ+BQ5dEpWknWu4i+6sah+VeHF+wHsqVR6unJwFjtJmI++eu2DFYU8
+# av6s3Y45LDbQ6u/0zOngjFSDJ5qGwjc8LkIa6Tc=
 # SIG # End signature block
